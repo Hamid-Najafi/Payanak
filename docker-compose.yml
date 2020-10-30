@@ -1,0 +1,79 @@
+version: "3"
+services:
+  dotnetangular:
+    image: goldenstarc/payanak-v2.0
+    volumes:
+      - VirgolExcels:/app/BulkData
+    ports:
+      - "5001:80/tcp"
+    # - "5001:443/tcp"
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
+    restart: always
+    environment:
+      - ASPNETCORE_URLS=https://+ # ;http://+
+
+    # - ASPNETCORE_ENVIRONMENT=Production
+    # - ASPNETCORE_HTTPS_PORT=5001
+    # - ASPNETCORE_Kestrel__Certificates__Default__Password=Certpass.97
+    # - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/payanak.legace.ir.pfx
+    networks:
+      - db-net
+      - outside
+    depends_on:
+      - postgresql
+    # privileged: true
+    # hostname: ipsec-vpn-server
+    container_name: payanak
+  postgresql:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=PostgreSQLpass.24
+    volumes:
+      - $HOME/docker/volumes/postgres:/var/lib/postgresql/data
+    # - db-data:/var/lib/mysql
+    restart: always
+    networks:
+      - db-net
+    container_name: postgresql
+  pgadmin4:
+    image: dpage/pgadmin4
+    ports:
+      - "5050:80"
+      - "5050:443"
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@legace.ir
+      - PGADMIN_DEFAULT_PASSWORD=pgAdminpass.24
+      - PGADMIN_ENABLE_TLS=0
+    volumes:
+      - /Users/hamid/TEST/DOCKER/certs/pgAdmin/pgadmin.legace.ir.crt:/certs/server.cert
+      - /Users/hamid/TEST/DOCKER/certs/pgAdmin/pgadmin.legace.ir.key:/certs/server.key
+    restart: always
+    networks:
+      - db-net
+      - outside
+    container_name: pgadmin4
+    depends_on:
+      - postgresql
+networks:
+  outside:
+    external:
+      name: ExternalNetwork
+  db-net:
+    #internal: true
+    external:
+      name: ExternalNetwork
+# volumes:
+#     db-data:
+#        driver: "vsphere"
+#        driver_opts:
+#           Capacity: "4G"
+#           VolumeStore: "default"
+#     web-data:
+#        driver: "vsphere"
+#        driver_opts:
+#           Capacity: "1G"
+#           VolumeStore: "default"

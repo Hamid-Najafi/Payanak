@@ -1,0 +1,26 @@
+<VirtualHost *:*>
+    RequestHeader set "X-Forwarded-Proto" expr=%{REQUEST_SCHEME}
+</VirtualHost>
+
+<VirtualHost *:80>
+    ProxyPreserveHost On
+    ProxyPass / http://127.0.0.1:5001/
+    ProxyPassReverse / http://127.0.0.1:5001/
+    ServerName panel.goldenstarc.ir
+    ErrorLog ${APACHE_LOG_DIR}payanak-error.log
+    CustomLog ${APACHE_LOG_DIR}payanak-access.log common
+RewriteEngine on
+RewriteCond %{SERVER_NAME} =panel.goldenstarc.ir
+RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]
+</VirtualHost>
+
+<VirtualHost *:80>
+    ProxyPreserveHost On
+    ProxyPass / http://127.0.0.1:5001/
+    ProxyPassReverse / http://127.0.0.1:5001/
+    ServerName api.goldenstarc.ir
+    ErrorLog ${APACHE_LOG_DIR}payanak-error.log
+    CustomLog ${APACHE_LOG_DIR}payanak-access.log common
+</VirtualHost>
+
+

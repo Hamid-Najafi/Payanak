@@ -1,0 +1,192 @@
+@import './variables';
+
+
+aw-wizard {
+  display: flex;
+  justify-content: flex-start;
+
+  .wizard-steps {
+    top: 0;
+    display: flex;
+  }
+}
+
+aw-wizard.horizontal {
+  flex-direction: column;
+
+  .wizard-steps {
+    width: 100%;
+    flex-direction: row;
+  }
+}
+
+aw-wizard.vertical {
+  flex-direction: row;
+
+  .wizard-steps {
+    min-width: calc(100% - 280px);
+    width: 80%;
+    height: 100%;
+    flex-direction: column;
+  }
+}
+
+
+aw-wizard-step,
+aw-wizard-completion-step {
+  height: auto;
+  width: 100%;
+}
+
+
+aw-wizard-navigation-bar {
+
+  ul.steps-indicator {
+
+    // http://www.paulirish.com/2012/box-sizing-border-box-ftw/
+    * {
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+    }
+
+    li {
+      position: relative;
+      pointer-events: none;
+
+      a .label {
+        color: $wz-color-current;
+        line-height: $wz-text-height;
+        font-size: $wz-text-height;
+        text-decoration: none;
+        text-transform: uppercase;
+        font-weight: bold;
+        transition: 0.25s;
+      }
+    }
+
+    li.navigable {
+      pointer-events: auto;
+
+      a {
+        cursor: pointer;
+      }
+
+      a:hover .label {
+        color: darken($wz-color-current, 20%);
+      }
+    }
+  }
+}
+
+aw-wizard-navigation-bar.horizontal {
+
+  ul.steps-indicator {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    margin: 0;
+    width: 100%;
+    list-style: none;
+
+    @mixin steps($number-of-components) {
+      &:before {
+        left: 100% / $number-of-components / 2;
+        right: 100% / $number-of-components / 2;
+      }
+
+      li {
+        width: 100% / $number-of-components;
+      }
+    }
+
+    &.steps-2 {
+      @include steps(2);
+    }
+
+    &.steps-3 {
+      @include steps(3);
+    }
+
+    &.steps-4 {
+      @include steps(4);
+    }
+
+    &.steps-5 {
+      @include steps(5);
+    }
+
+    &.steps-6 {
+      @include steps(6);
+    }
+
+    &.steps-7 {
+      @include steps(7);
+    }
+
+    &.steps-8 {
+      @include steps(8);
+    }
+
+    &.steps-9 {
+      @include steps(9);
+    }
+
+    &.steps-10 {
+      @include steps(10);
+    }
+
+    li {
+      margin: 0;
+      padding: 0;
+      text-align: center;
+
+      a .label {
+        display: inline-block;
+        padding-top: $wz-text-padding-bottom;
+        text-align: center;
+      }
+    }
+  }
+}
+
+aw-wizard-navigation-bar.vertical {
+  max-width: 280px;
+  width: 20%;
+  height: 100%;
+  position: sticky;
+  top: 0;
+
+  ul.steps-indicator {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    list-style: none;
+    margin: auto;
+
+    li {
+
+      &:not(:last-child) {
+        margin-bottom: 0;
+        padding-bottom: $wz-distance-between-steps;
+      }
+
+      a {
+        // center labels vertically
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        .label {
+          margin-left: $wz-text-margin-left;
+          text-align: left;
+        }
+      }
+    }
+  }
+}
+
+@include wz-define-layout-styles();
+

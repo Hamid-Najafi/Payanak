@@ -1,0 +1,38 @@
+import { OnInit, ElementRef, EventEmitter, AfterViewInit, SimpleChanges, OnChanges } from '@angular/core';
+import Map from 'ol/Map';
+import MapBrowserEvent from 'ol/MapBrowserEvent';
+import MapEvent from 'ol/MapEvent';
+import ObjectEvent from 'ol/Object';
+import RenderEvent from 'ol/render/Event';
+import { Control } from 'ol/control';
+import { Interaction } from 'ol/interaction';
+export declare class MapComponent implements OnInit, AfterViewInit, OnChanges {
+    private host;
+    instance: Map;
+    componentType: string;
+    width: string;
+    height: string;
+    pixelRatio: number;
+    keyboardEventTarget: Element | string;
+    loadTilesWhileAnimating: boolean;
+    loadTilesWhileInteracting: boolean;
+    logo: string | boolean;
+    renderer: 'canvas' | 'webgl';
+    olClick: EventEmitter<MapBrowserEvent>;
+    dblClick: EventEmitter<MapBrowserEvent>;
+    moveStart: EventEmitter<MapEvent>;
+    moveEnd: EventEmitter<MapEvent>;
+    pointerDrag: EventEmitter<MapBrowserEvent>;
+    pointerMove: EventEmitter<MapBrowserEvent>;
+    onpostrender: EventEmitter<RenderEvent>;
+    postRender: EventEmitter<MapEvent>;
+    onprerender: EventEmitter<RenderEvent>;
+    propertyChange: EventEmitter<ObjectEvent>;
+    singleClick: EventEmitter<MapBrowserEvent>;
+    controls: Control[];
+    interactions: Interaction[];
+    constructor(host: ElementRef);
+    ngOnInit(): void;
+    ngOnChanges(changes: SimpleChanges): void;
+    ngAfterViewInit(): void;
+}
